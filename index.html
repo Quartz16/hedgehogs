@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style>
+        </style>
+        <script src="index.js"></script>
     </head>
-    <body>
+    <body onload="setInterval(updateQuillsDropped, 1000);">
         
     <h1>
-        HELLOOOO
+        HEDGEHOGS :)
     </h1>
+    <p>
+    You have <span id="quills"> 0 </span> quills.
+    <br>
+    <button type="button" onClick="updateQuillsCollected();">Collect quill</button>
+    </p>
     </body>
 </html>
