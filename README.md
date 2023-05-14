@@ -4,7 +4,7 @@
 Prickly and cute, hedgehogs invite you to write your own adventure with the quills they shed. In this clicker game, raise pet hedgehogs and heed their wisdom to shape your gameplay in unexpected ways.
 
 ## Game Link
-Play the game at this [link](quartz16.github.io/hedgehogs)
+Play the game at this [link](https://quartz16.github.io/hedgehogs)
 
 ## Credits
 This game was created by quartz16, inspired by CandyBox 2 and several other incremental games.
