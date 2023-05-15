@@ -5,15 +5,19 @@
         </style>
         <script src="index.js"></script>
     </head>
-    <body onload="setInterval(updateQuillsDropped, 1000);">
+    <body>
         
     <h1>
         HEDGEHOGS :)
     </h1>
     <p>
+    You have <span id="coins"> 50 </span> coins.
+    You have <span id="hedgehogs"> 0 </span> hedgehogs.
     You have <span id="quills"> 0 </span> quills.
     <br>
+    <button type="button" onClick="buyHedgehog(); setInterval(updateQuillsAvailable, hedgehogs * 1000);">Buy hedgehog</button>
     <button type="button" onClick="updateQuillsCollected();">Collect quill</button>
     </p>
+    <p id="message"></p>
     </body>
 </html>

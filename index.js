@@ -1,19 +1,40 @@
 const gameObjects = {
+    coins: 100,
     quillsCollected: 0,
-    quillsDropped:0,
+    quillsAvailable:0,
 };
 
-function updateQuillsDropped() {
-    gameObjects.quillsDropped++;
+var hedgehogs = 0;
+
+function updateQuillsAvailable() {
+    console.log(hedgehogs)
+    gameObjects.quillsAvailable++;
 }
 
 
 function updateQuillsCollected() 
 {
-    if (gameObjects.quillsDropped > 0) {
+    if (gameObjects.quillsAvailable > 0) {
         gameObjects.quillsCollected++;
-        gameObjects.quillsDropped--;
-        console.log(gameObjects.quillsCollected + " " + gameObjects.quillsDropped);
+        gameObjects.quillsAvailable--;
         document.getElementById("quills").innerHTML = gameObjects.quillsCollected;
+        document.getElementById("message").innerHTML = "Collected a quill."
+    }
+    else {
+        document.getElementById("message").innerHTML = "Error: no quills available to collect."
+    }
+}
+
+function buyHedgehog()
+{
+    if (gameObjects.coins >= 50) {
+        hedgehogs++;
+        gameObjects.coins -= 50;
+        document.getElementById("hedgehogs").innerHTML = hedgehogs;
+        document.getElementById("coins").innerHTML = gameObjects.coins;
+        document.getElementById("message").innerHTML = "Bought a hedgehog for 50 coins."
+    }
+    else {
+        document.getElementById("message").innerHTML = "Error: not enough coins to buy a hedgehog."
     }
 }
