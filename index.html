@@ -2,22 +2,47 @@
 <html>
     <head>
         <style>
+            body {width: 100%;wordwrap: normal}
         </style>
         <script src="index.js"></script>
     </head>
-    <body>
+    <body onload="initializeGameObjects()">
         
     <h1>
         HEDGEHOGS :)
     </h1>
     <p>
-    You have <span id="coins"> 50 </span> coins.
-    You have <span id="hedgehogs"> 0 </span> hedgehogs.
-    You have <span id="quills"> 0 </span> quills.
+    You have 
+    <ul>
+        <li> <span id="coins"> </span> coins </li>
+        <li> <span id="hedgehogs"> </span> hedgehogs </li>
+        <li> <span id="quillsCollected"> </span> quills </li>
+        <li> <span id="glue"> </span> glue </li>
+        <li> <span id="pens"> </span> pens </li>
+        <li> <span id="ink"> </span> ink </li>
+    
+    </ul>
     <br>
-    <button type="button" onClick="buyHedgehog(); setInterval(updateQuillsAvailable, hedgehogs * 1000);">Buy hedgehog</button>
+    <button type="button" onClick="buyItem('hedgehogs', 50); setInterval(updateQuillsAvailable, gameObjects['hedgehogs'] * 1000);">Buy hedgehog</button>
+    <button type="button" onClick="buyItem('glue', 5)">Buy glue</button>
     <button type="button" onClick="updateQuillsCollected();">Collect quill</button>
+    <button type="button" onClick="makePen();">Make pen</button>
+    <button type="button" onClick="buyItem('ink', 3)">Buy ink</button>
+    <br>
+    <button type="button" onClick="writeEntry()">Write journal entry</button>
+    <button type="button" onClick="viewJournal()">View journal</button>
+    </p>
+    <p>
+    <label for="journal">Write a journal entry here:</label>
+    <br>
+    <textarea id="journal" name="journal" rows="4" cols="53" maxlength=gameObjects[ink] * 100></textarea>
+    <br>
+    <button type="button" onClick="saveEntry()">Save entry to journal</button>
     </p>
     <p id="message"></p>
+    <p>Journal entry #<span id="entryNum"></span></p>
+    <p id="journalViewing" style="word-wrap:normal"></p>
+    <button type="button" onClick="previousEntry()">Previous entry</button>
+    <button type="button" onClick="nextEntry()">Next entry</button>
     </body>
 </html>
