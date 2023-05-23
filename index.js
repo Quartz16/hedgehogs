@@ -75,12 +75,13 @@ function makePen()
 {
     if (gameObjects[quillsCollected] >= 5) {
         if (gameObjects[glue] >= 1) {
-            gameObjects[pens]++;
-            gameObjects[quillsCollected] -= 5;
-            gameObjects[glue]--;
-            document.getElementById("pens").innerHTML = gameObjects[pens];
-            document.getElementById("quillsCollected").innerHTML = gameObjects[quillsCollected];
-            document.getElementById("glue").innerHTML = gameObjects[glue];
+            setGameObject(pens, gameObjects[pens]+1);
+            setGameObject(quillsCollected, gameObjects[quillsCollected]-5);
+            setGameObject(glue, gameObjects[glue]-1);
+            if (gameObjects[glue] == 0) {
+                hide('#glueBought');
+            }
+            setVisible("#penMade", true);
         }
         else {
             setMessage("Error: not enough glue to make a pen.");
@@ -94,10 +95,9 @@ function makePen()
 function buyItem(itemName, cost)
 {
     if (gameObjects[coins] >= cost) {
-        gameObjects[itemName]++;
-        gameObjects[coins] -= cost;
-        document.getElementById(itemName).innerHTML = gameObjects[itemName];
-        document.getElementById("coins").innerHTML = gameObjects[coins];
+        setGameObject(itemName, gameObjects[itemName]+1);
+        setGameObject(coins, gameObjects[coins]-cost);
+        setVisible('#' + itemName + 'Bought', true);
         setMessage("Bought " + itemName + " for " + cost + " coins.");
     }
     else {
@@ -106,10 +106,55 @@ function buyItem(itemName, cost)
     
 }
 
+function sellItem(itemName, cost)
+{
+    if(gameObjects[itemName] > 0) {
+        if (gameObjects[itemName] == 1) {
+            hide('#' + itemName + 'Bought');
+        }
+        setGameObject(itemName, gameObjects[itemName]-1);
+        setGameObject(coins, gameObjects[coins]+cost);
+        setMessage("Sold " + itemName + " for " + cost + " coins.");
+    }
+    else {
+        setMessage("Error: no " + itemName + " left to sell.");
+    }
+}
+
+
+function hide(elementName)
+{
+    var elements = document.querySelectorAll(elementName);
+    for (let i=0; i<elements.length; i++) {
+        elements[i].style.display = 'none';
+    }
+}
+
+function setVisible(elementName, inline)
+{
+    var styleType;
+    if (inline) {
+        styleType = 'inline';
+    }
+    else {
+        styleType = 'block';
+    }
+    var elements = document.querySelectorAll(elementName);
+    for (let i=0; i<elements.length;i++) {
+        elements[i].style.display = styleType;
+    }
+}
+
+function updateJournalLength()
+{
+    var textLength = gameObjects[ink] * 100;
+    document.getElementById('journal').setAttribute('maxlength', textLength); 
+}
+
 function writeEntry() {
     if (gameObjects[pens] >= 1) {
         if (gameObjects[ink] >= 1) {
-            setGameObject(ink, gameObjects[ink]-1);
+            setVisible("#writeJournal", false);
         }
         else {
             setMessage("Error: need ink to write.");
@@ -125,6 +170,14 @@ function saveEntry() {
         entry = document.getElementById("journal").value;
         journal[journalIndex] = entry;
         journalIndex++;
+        setVisible("#viewJournalButton", true);
+        hide("#writeJournal");
+        inkUsed = Math.ceil(entry.length / 100);
+        setGameObject(ink, gameObjects[ink]-inkUsed);
+        if (gameObjects[ink] == 0) {
+            hide('#inkBought');
+        }
+        updateJournalLength();
     }
     else {
         setMessage("Error: need a pen to write and save entries.")
@@ -134,6 +187,8 @@ function saveEntry() {
 
 function viewJournal() {
     if (journalIndex > 0) {
+        setVisible("#viewJournal", false);
+        setVisible("#closeJournalButton", true);
         entryIndex = 0;
         document.getElementById("journalViewing"). innerHTML = journal[journalViewingIndex];
         document.getElementById("entryNum").innerHTML = journalViewingIndex+1;
@@ -142,6 +197,7 @@ function viewJournal() {
         setMessage("Error: please write a journal entry to be viewed");
     }
 }
+
 
 function previousEntry() {
     if (journalIndex > 0) {

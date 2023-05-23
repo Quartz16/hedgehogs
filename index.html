@@ -16,33 +16,64 @@
     <ul>
         <li> <span id="coins"> </span> coins </li>
         <li> <span id="hedgehogs"> </span> hedgehogs </li>
+        <div id="hedgehogsBought" style="display:none;">
         <li> <span id="quillsCollected"> </span> quills </li>
+        </div>
+        <div id="glueBought" style="display:none;">
         <li> <span id="glue"> </span> glue </li>
-        <li> <span id="pens"> </span> pens </li>
+        </div>
+        <div id="inkBought" style="display:none;">
         <li> <span id="ink"> </span> ink </li>
+        </div>
+        <div id="penMade" style="display:none;">
+        <li> <span id="pens"> </span> pens </li>
+        </div>
     
     </ul>
-    <br>
     <button type="button" onClick="buyItem('hedgehogs', 50); setInterval(updateQuillsAvailable, gameObjects['hedgehogs'] * 1000);">Buy hedgehog</button>
-    <button type="button" onClick="buyItem('glue', 5)">Buy glue</button>
-    <button type="button" onClick="updateQuillsCollected();">Collect quill</button>
-    <button type="button" onClick="makePen();">Make pen</button>
-    <button type="button" onClick="buyItem('ink', 3)">Buy ink</button>
     <br>
-    <button type="button" onClick="writeEntry()">Write journal entry</button>
-    <button type="button" onClick="viewJournal()">View journal</button>
+        
+    <div id="hedgehogsBought" style="display:none;">
+    <button type="button" onClick="updateQuillsCollected();">Collect quill</button>
+    <button type="button" onClick="buyItem('glue', 5);">Buy glue</button>
+    <button type="button" onClick="buyItem('ink', 3); updateJournalLength();">Buy ink</button>
+    <button type="button" onClick="makePen();">Make pen</button>
+    <br>
+    <button type="button" onClick="sellItem('hedgehogs', 45);">Sell hedgehog</button>
+    <div id="glueBought" style="display:none;">
+    <button type="button" onClick="sellItem('glue', 4);">Sell glue</button>
+    </div>
+    <div id="inkBought" style="display:none;">
+    <button type="button" onClick="sellItem('ink', 2);">Sell ink</button>
+    </div>
+    <div id="penMade" style="display:none;">
+    <button type="button" onClick="sellItem('pens', 10);">Sell pen</button>
+    </div>
+    <br>
+    <button type="button" onClick="writeEntry();">Write journal entry</button>
+    </div>
+    <div id="viewJournalButton" style="display:none;">
+    <button type="button" onClick="viewJournal();">View journal</button>
+    </div>
+    <div id="closeJournalButton" style="display:none;">
+    <button type="button" onClick="hide('#viewJournal', false);">Close journal</button>
+    </div>
     </p>
     <p>
+    <div id="writeJournal" style="display:none;">
     <label for="journal">Write a journal entry here:</label>
     <br>
-    <textarea id="journal" name="journal" rows="4" cols="53" maxlength=gameObjects[ink] * 100></textarea>
+    <textarea id="journal" name="journal" rows="4" cols="53" maxlength="100"></textarea>
     <br>
-    <button type="button" onClick="saveEntry()">Save entry to journal</button>
+    <button type="button" onClick="saveEntry();">Save entry to journal</button>
+    </div>
     </p>
     <p id="message"></p>
+    <div id="viewJournal" style="display:none;">
     <p>Journal entry #<span id="entryNum"></span></p>
     <p id="journalViewing" style="word-wrap:normal"></p>
-    <button type="button" onClick="previousEntry()">Previous entry</button>
-    <button type="button" onClick="nextEntry()">Next entry</button>
+    <button type="button" onClick="previousEntry();">Previous entry</button>
+    <button type="button" onClick="nextEntry();">Next entry</button>
+    </div>
     </body>
 </html>
