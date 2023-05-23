@@ -8,6 +8,7 @@
 //    ink: 0,
 //};
 
+
 var gameObjects= {};
 var coins = "coins";
 var hedgehogs = "hedgehogs";
