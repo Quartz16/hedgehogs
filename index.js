@@ -19,6 +19,7 @@ var pens = "pens";
 var ink = "ink";
 
 const journal = [];
+var journalOpen = false;
 var journalIndex = 0;
 var journalViewingIndex = 0;
 
@@ -171,7 +172,7 @@ function saveEntry() {
         entry = document.getElementById("journal").value;
         journal[journalIndex] = entry;
         journalIndex++;
-        setVisible("#viewJournalButton", true);
+        setVisible("#toggleJournalButton", true);
         hide("#writeJournal");
         inkUsed = Math.ceil(entry.length / 100);
         setGameObject(ink, gameObjects[ink]-inkUsed);
@@ -186,13 +187,21 @@ function saveEntry() {
 
 }
 
-function viewJournal() {
+function toggleJournal() {
     if (journalIndex > 0) {
-        setVisible("#viewJournal", false);
-        setVisible("#closeJournalButton", true);
-        entryIndex = 0;
-        document.getElementById("journalViewing"). innerHTML = journal[journalViewingIndex];
-        document.getElementById("entryNum").innerHTML = journalViewingIndex+1;
+        if (journalOpen == false) {
+            setVisible("#toggleJournal", false);
+            document.getElementById("toggleJournalButton").textContent = "Close journal";
+            entryIndex = 0;
+            document.getElementById("journalViewing"). innerHTML = journal[journalViewingIndex];
+            document.getElementById("entryNum").innerHTML = journalViewingIndex+1;
+            journalOpen = true;
+        }
+        else {
+            hide("#toggleJournal");
+            document.getElementById("toggleJournalButton").textContent = "Open journal";
+            journalOpen = false;
+        }
     }
     else {
         setMessage("Error: please write a journal entry to be viewed");

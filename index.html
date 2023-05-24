@@ -52,12 +52,7 @@
     <br>
     <button type="button" onClick="writeEntry();">Write journal entry</button>
     </div>
-    <div id="viewJournalButton" style="display:none;">
-    <button type="button" onClick="viewJournal();">View journal</button>
-    </div>
-    <div id="closeJournalButton" style="display:none;">
-    <button type="button" onClick="hide('#viewJournal', false);">Close journal</button>
-    </div>
+    <button type="button" id="toggleJournalButton" style="display:none;" onClick="toggleJournal();">Open journal</button>
     </p>
     <p>
     <div id="writeJournal" style="display:none;">
@@ -69,7 +64,7 @@
     </div>
     </p>
     <p id="message"></p>
-    <div id="viewJournal" style="display:none;">
+    <div id="toggleJournal" style="display:none;">
     <p>Journal entry #<span id="entryNum"></span></p>
     <p id="journalViewing" style="word-wrap:normal"></p>
     <button type="button" onClick="previousEntry();">Previous entry</button>
