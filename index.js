@@ -1,12 +1,3 @@
-//const gameObjects[= {
-//    coins: 100,
-//    hedgehogs: 0,
-//    quillsCollected: 0,
-//    quillsAvailable:0,
-//    glue: 0,
-//    pens: 0,
-//    ink: 0,
-//};
 
 
 var gameObjects= {};
@@ -17,6 +8,13 @@ var quillsAvailable = "quillsAvailable";
 var glue = "glue";
 var pens = "pens";
 var ink = "ink";
+var sitters = "sitters";
+var gluers = "gluers";
+var penmakers = "penmakers";
+var pensellers = "pensellers";
+
+var automations = {};
+
 
 const journal = [];
 var journalOpen = false;
@@ -25,10 +23,9 @@ var journalViewingIndex = 0;
 
 function setGameObject(name, value) {
     gameObjects[name] = value;
-    element = document.getElementById(name)
-    //if there's a corresponding id, then set its value
-    if (element) {
-        element.innerHTML = value;
+    var elements = document.querySelectorAll("#" + name);
+    for(let i=0; i<elements.length; i++) {
+        elements[i].innerHTML = value;
     }
 }
 
@@ -45,12 +42,23 @@ function initializeGameObjects() {
     setGameObject(glue, 0);
     setGameObject(pens, 0);
     setGameObject(ink, 0);
+    setGameObject(sitters, 0);
+    setGameObject(gluers, 0);
+    setGameObject(penmakers, 0);
+    setGameObject(pensellers, 0);
 
 }
 
+function initializeAutomations() {
+    automations[hedgehogs] = [];
+    automations[sitters] = [];
+    automations[gluers] = [];
+    automations[penmakers] = [];
+    automations[pensellers] = [];
+}
 
 function updateQuillsAvailable() {
-    gameObjects[quillsAvailable]++;
+    setGameObject(quillsAvailable, gameObjects[quillsAvailable]+1);
 }
 
 
@@ -61,9 +69,8 @@ function updateQuillsCollected()
         return;
     }
     if (gameObjects[quillsAvailable] > 0) {
-        gameObjects[quillsCollected]++;
-        gameObjects[quillsAvailable]--;
-        document.getElementById("quillsCollected").innerHTML = gameObjects[quillsCollected];
+        setGameObject(quillsAvailable, gameObjects[quillsAvailable]-1);
+        setGameObject(quillsCollected, gameObjects[quillsCollected]+1);
         setMessage("Collected a quill.");
     }
     else {
@@ -83,7 +90,7 @@ function makePen()
             if (gameObjects[glue] == 0) {
                 hide('#glueBought');
             }
-            setVisible("#penMade", true);
+            setVisible("#pensBought", true);
         }
         else {
             setMessage("Error: not enough glue to make a pen.");
@@ -94,6 +101,7 @@ function makePen()
     }
 }
 
+//function for buying normal items
 function buyItem(itemName, cost)
 {
     if (gameObjects[coins] >= cost) {
@@ -105,7 +113,33 @@ function buyItem(itemName, cost)
     else {
         setMessage("Error: not enough coins to buy " + itemName + " (needs " + cost + ").");
     }
-    
+}
+
+function buyGlue() {
+    buyItem('glue', 5);
+}
+
+function sellPen() {
+    sellItem('pens', 10);
+}
+
+//function for buying items that perform actions every interval seconds
+function buyAutomation(itemName, cost, interval, automationFunction)
+{
+    if (gameObjects[coins] >= cost) {
+        setGameObject(itemName, gameObjects[itemName]+1);
+        setGameObject(coins, gameObjects[coins]-cost);
+        setVisible('#' + itemName + 'Bought', true);
+        setMessage("Bought " + itemName + " for " + cost + " coins.");
+        //if the interval isn't positive, there's a problem
+        if (interval > 0) {
+            const automation = setInterval(automationFunction, interval * 1000);
+            automations[itemName].push(automation);
+        }
+    }
+    else {
+        setMessage("Error: not enough coins to buy " + itemName + " (needs " + cost + ").");
+    }
 }
 
 function sellItem(itemName, cost)
@@ -117,11 +151,17 @@ function sellItem(itemName, cost)
         setGameObject(itemName, gameObjects[itemName]-1);
         setGameObject(coins, gameObjects[coins]+cost);
         setMessage("Sold " + itemName + " for " + cost + " coins.");
+
+        //if the item was an automation, we need to delete one of the setIntervals
+        if (itemName in automations) {
+            clearInterval((automations[itemName]).pop());
+        }
     }
     else {
         setMessage("Error: no " + itemName + " left to sell.");
     }
 }
+
 
 
 function hide(elementName)
