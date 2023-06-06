@@ -6,11 +6,7 @@
                 wordwrap: normal;
                 padding-right:30px;
                 padding-left: 20px;
-                padding-bottom:30px;
-                font-size:16px;
-            }
-            p {
-                display: inline;
+                font-size:20px;
             }
             .column {float: left;
                 width: 45%;
@@ -24,11 +20,10 @@
             }
             button {
                 line-height:1.5;
-                font-size:16px;
+                font-size:18px;
                 margin-top: 2px;
                 margin-bottom:5px;
                 margin-right:5px;
-                margin-left:5px;
             }
         </style>
         <script src="index.js"></script>
@@ -74,7 +69,6 @@
             </ul>
             </p>
             <!-- ACTIONS -->
-            <p>
             Actions:
             <br>
             <button type="button" onClick="buyAutomation('hedgehogs', 50, 1, updateQuillsAvailable);"> Buy hedgehog</button>
@@ -102,7 +96,6 @@
             </div>
             <br>
             <button type="button" id="toggleJournalButton" style="display:none;" onClick="toggleJournal();">Open journal</button>
-            </p>
             <div id="writeJournal" style="display:none;">
                 <p>
                 <label for="journal">Write a journal entry here:</label>
@@ -113,6 +106,7 @@
                 </p>
             </div>
             <p id="message"></p>
+
             </div>
             <div class="column">
                 <div id="hedgehogsBought" style="display:none;">
@@ -155,9 +149,7 @@
                 </div>
                 <div id="toggleJournal" style="display:none;">
                     <p>Journal entry #<span id="entryNum"></span></p>
-                    <br>
                     <p id="journalViewing" style="word-wrap:normal"></p>
-                    <br>
                     <button type="button" onClick="previousEntry();">Previous entry</button>
                     <button type="button" onClick="nextEntry();">Next entry</button>
                 </div>
