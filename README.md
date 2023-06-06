@@ -7,7 +7,7 @@ Prickly and cute, hedgehogs invite you to write your own adventure with the quil
 Play the game at this [link](https://quartz16.github.io/hedgehogs)
 
 ## Game Development Progress
-The game is currently in progress of being made, and thus most features and functionality have yet to be created. The game is being incrementally updated with the basic mechanics, and will be available throughout the process! The aim is to finish the basic features by the end of May 2023 and complete the majority of game features by around August 2023 timeframe.
+The game is currently in progress of being made, and thus most features and functionality have yet to be created. The game is being incrementally updated with the basic mechanics, and will be available throughout the process! The aim is to finish the majority of game features by around August 2023 timeframe.
 
 ## Saving
 Game saves are not currently available and will be added sometime after the basic functionality has been implemented.
